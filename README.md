@@ -29,7 +29,7 @@ assertEquals(actual, {
 });
 ```
 
-`rangeSet` is a list of one or more `<int-range>`, `<suffix-range>`,
+`rangeSet` is a list of one or more `<int-range>`, `<suffix-range>` and
 `other-range` according to the definition of `<range-spec>`.
 
 It has the following data structure:
