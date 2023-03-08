@@ -2,4 +2,12 @@
 // This module is browser compatible.
 
 export { parse } from "./parse.ts";
-export { type Range } from "./types.ts";
+export type {
+  IntRange,
+  OtherRange,
+  Range,
+  RangeSet,
+  RangeSpec,
+  RangesSpecifier,
+  SuffixRange,
+} from "./types.ts";
