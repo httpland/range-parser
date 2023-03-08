@@ -1,7 +1,9 @@
 // Copyright 2023-latest the httpland authors. All rights reserved. MIT license.
 // This module is browser compatible.
 
-export type RangeSpec = IntRange | SuffixRange;
+export type RangeSpec = IntRange | SuffixRange | OtherRange;
+
+export type OtherRange = string;
 
 export interface IntRange {
   readonly firstPos: number;

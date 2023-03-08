@@ -16,7 +16,7 @@ The field naming conventions follow
 import { parse } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
-const actual = parse("bytes=0-100, 200-, -300");
+const actual = parse("bytes=0-100, 200-, -300, test");
 
 assertEquals(actual, {
   rangeUnit: "bytes",
@@ -24,8 +24,25 @@ assertEquals(actual, {
     { firstPos: 0, lastPos: 100 },
     { firstPos: 200, lastPos: undefined },
     { suffixLength: 300 },
+    "test",
   ],
 });
+```
+
+`rangeSet` is a list of one or more `<int-range>`, `<suffix-range>`,
+`other-range` according to the definition of `<range-spec>`.
+
+It has the following data structure:
+
+```ts
+interface IntRange {
+  firstPos: number;
+  lastPos: number | undefined;
+}
+interface SuffixRange {
+  suffixLength: number;
+}
+type OtherRange = string;
 ```
 
 ### Throwing error

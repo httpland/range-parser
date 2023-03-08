@@ -2,10 +2,10 @@
 // This module is browser compatible.
 
 import { isNotEmpty, isString, isUndefined, trim } from "./deps.ts";
-import type { IntRange, Range, RangeSpec, SuffixRange } from "./types.ts";
+import type { Range, RangeSpec } from "./types.ts";
 
 const RangeSpecifierRe =
-  /^(?<rangeUnit>([!#$%&'*+-.^_`|~A-Za-z0-9])+)=(?<rangeSet>((([0-9])+-(([0-9])+)?)|(-([0-9])+))((\x20|\t)*,(\x20|\t)*((([0-9])+-(([0-9])+)?)|(-([0-9])+)))*)$/;
+  /^(?<rangeUnit>([!#$%&'*+-.^_`|~A-Za-z0-9])+)=(?<rangeSet>((([0-9])+-(([0-9])+)?)|(-([0-9])+)|([\x21-\x2B\x2D-\x7E]+))((\x20|\t)*,(\x20|\t)*((([0-9])+-(([0-9])+)?)|(-([0-9])+)|([\x21-\x2B\x2D-\x7E]+)))*)$/;
 
 export interface RangesSpecifier {
   readonly rangeUnit: string;
@@ -58,9 +58,9 @@ export function parseRangesSpecifier(input: string): RangesSpecifier {
 }
 
 const RangeSpecRe =
-  /^((?<firstPos>[0-9]+)-(?<lastPos>[0-9]+)?)$|^(-(?<suffixLength>[0-9]+))$/;
+  /^((?<firstPos>[0-9]+)-(?<lastPos>[0-9]+)?)$|^(-(?<suffixLength>[0-9]+))$|^(?<otherRange>[\x21-\x2B\x2D-\x7E]+)$/;
 
-export function parseRangeSpec(input: string): IntRange | SuffixRange {
+export function parseRangeSpec(input: string): RangeSpec {
   const result = RangeSpecRe.exec(input);
 
   if (!result || !result.groups) {
@@ -70,6 +70,7 @@ export function parseRangeSpec(input: string): IntRange | SuffixRange {
   const firstPos = result.groups.firstPos;
   const lastPos = result.groups.lastPos;
   const suffixLength = result.groups.suffixLength;
+  const otherRange = result.groups.otherRange;
 
   if (isString(firstPos)) {
     return {
@@ -85,6 +86,8 @@ export function parseRangeSpec(input: string): IntRange | SuffixRange {
 
     return { suffixLength: suffix };
   }
+
+  if (isString(otherRange)) return otherRange;
 
   throw SyntaxError("Unreachable");
 }

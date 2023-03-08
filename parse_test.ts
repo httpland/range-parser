@@ -1,10 +1,55 @@
 import {
+  parse,
   parseRangeSpec,
   parseRangesSpecifier,
   RangesSpecifier,
 } from "./parse.ts";
-import { RangeSpec } from "./types.ts";
+import { Range, RangeSpec } from "./types.ts";
 import { assertEquals, assertThrows, describe, it } from "./_dev_deps.ts";
+
+describe("parse", () => {
+  it("should return parsed <Range>", () => {
+    const table: [string, Range][] = [
+      ["bytes=0-100, 200-, -300, test", {
+        rangeUnit: "bytes",
+        rangeSet: [
+          { firstPos: 0, lastPos: 100 },
+          { firstPos: 200, lastPos: undefined },
+          { suffixLength: 300 },
+          "test",
+        ],
+      }],
+      ["    xxx=1-0, 0-, -0, abc1  ", {
+        rangeUnit: "xxx",
+        rangeSet: [
+          { firstPos: 1, lastPos: 0 },
+          { firstPos: 0, lastPos: undefined },
+          { suffixLength: 0 },
+          "abc1",
+        ],
+      }],
+    ];
+
+    table.forEach(([input, expected]) => {
+      assertEquals(parse(input), expected);
+    });
+  });
+
+  it("should throw error", () => {
+    const table: string[] = [
+      "",
+      "a",
+      "abc",
+      "=",
+      "<>=1",
+      "unknown=,",
+    ];
+
+    table.forEach((input) => {
+      assertThrows(() => parse(input));
+    });
+  });
+});
 
 describe("parseRangesSpecifier", () => {
   it("should return parsed <ranges-specifier>", () => {
@@ -23,6 +68,26 @@ describe("parseRangesSpecifier", () => {
         rangeUnit: "unknown!",
         rangeSet: "-1234567890",
       }],
+      ["unknown=a", {
+        rangeUnit: "unknown",
+        rangeSet: "a",
+      }],
+      ["a=b", {
+        rangeUnit: "a",
+        rangeSet: "b",
+      }],
+      ["a=1", {
+        rangeUnit: "a",
+        rangeSet: "1",
+      }],
+      ["a=1.0", {
+        rangeUnit: "a",
+        rangeSet: "1.0",
+      }],
+      ["a1=120", {
+        rangeUnit: "a1",
+        rangeSet: "120",
+      }],
     ];
 
     table.forEach(([input, expected]) => {
@@ -35,16 +100,11 @@ describe("parseRangesSpecifier", () => {
       "",
       "a",
       "abc",
-      "a=b",
       "=",
-      "a=1",
-      "<>=1-",
-      "a=1.1",
-      "a=1.0",
-      "a=120 ",
+      "<>=1",
       " a=120",
       " a=120 ",
-      "a1=120",
+      "unknown=,",
     ];
 
     table.forEach((input) => {
@@ -64,6 +124,11 @@ describe("parseRangeSpec", () => {
 
       ["-0", { suffixLength: 0 }],
       ["-100", { suffixLength: 100 }],
+
+      ["a", "a"],
+      ["0", "0"],
+      ["123", "123"],
+      ["<!@#$>", "<!@#$>"],
     ];
 
     table.forEach(([input, expected]) => {
@@ -74,17 +139,8 @@ describe("parseRangeSpec", () => {
   it("should throw error if the input is invalid syntax", () => {
     const table: string[] = [
       "",
-      "a",
-      "0",
-      "1",
-      "1.0-",
-      "0.1-",
-      "0-0.0",
-      "0-0.1",
-      "100-100,",
-      "100- ",
-      " 100-",
-      "-100,",
+      ",",
+      "abc,",
     ];
 
     table.forEach((input) => {
