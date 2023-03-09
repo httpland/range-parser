@@ -95,8 +95,6 @@ export function parseRangeSpec(input: string): RangeSpec {
   if (isString(suffixLength)) {
     const suffix = Number.parseInt(suffixLength);
 
-    if (isNaN(suffix)) throw SyntaxError(Msg.InvalidToken);
-
     return { suffixLength: suffix };
   }
 
