@@ -56,6 +56,76 @@ import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 assertThrows(() => parse("<invalid:input>"));
 ```
 
+## Utils
+
+We provide some utilities.
+
+### isIntRange
+
+Whether the `RangeSpec` is `IntRange` or not.
+
+```ts
+import {
+  type IntRange,
+  isIntRange,
+  type OtherRange,
+  type SuffixRange,
+} from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { assert } from "https://deno.land/std/testing/asserts.ts";
+
+declare const intRange: IntRange;
+declare const suffixRange: SuffixRange;
+declare const otherRange: OtherRange;
+
+assert(isIntRange(intRange));
+assert(!isIntRange(suffixRange));
+assert(!isIntRange(otherRange));
+```
+
+### isSuffixRange
+
+Whether the `RangeSpec` is `SuffixRange` or not.
+
+```ts
+import {
+  type IntRange,
+  isSuffixRange,
+  type OtherRange,
+  type SuffixRange,
+} from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { assert } from "https://deno.land/std/testing/asserts.ts";
+
+declare const intRange: IntRange;
+declare const suffixRange: SuffixRange;
+declare const otherRange: OtherRange;
+
+assert(isSuffixRange(suffixRange));
+assert(!isSuffixRange(intRange));
+assert(!isSuffixRange(otherRange));
+```
+
+### isOtherRange
+
+Whether the `RangeSpec` is `OtherRange` or not.
+
+```ts
+import {
+  type IntRange,
+  isOtherRange,
+  type OtherRange,
+  type SuffixRange,
+} from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { assert } from "https://deno.land/std/testing/asserts.ts";
+
+declare const intRange: IntRange;
+declare const suffixRange: SuffixRange;
+declare const otherRange: OtherRange;
+
+assert(isOtherRange(otherRange));
+assert(!isOtherRange(intRange));
+assert(!isOtherRange(suffixRange));
+```
+
 ## License
 
 Copyright © 2023-present [httpland](https://github.com/httpland).
