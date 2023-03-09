@@ -19,13 +19,13 @@ describe("parse", () => {
           "test",
         ],
       }],
-      ["    xxx=1-0, 0-, -0, abc1  ", {
-        rangeUnit: "xxx",
+      ["unknown!=1000-,000-1000,-100,unknown", {
+        rangeUnit: "unknown!",
         rangeSet: [
-          { firstPos: 1, lastPos: 0 },
-          { firstPos: 0, lastPos: undefined },
-          { suffixLength: 0 },
-          "abc1",
+          { firstPos: 1000, lastPos: undefined },
+          { firstPos: 0, lastPos: 1000 },
+          { suffixLength: 100 },
+          "unknown",
         ],
       }],
     ];
@@ -43,6 +43,7 @@ describe("parse", () => {
       "=",
       "<>=1",
       "unknown=,",
+      "xxx=1-0",
     ];
 
     table.forEach((input) => {
@@ -119,8 +120,6 @@ describe("parseRangeSpec", () => {
       ["0-", { firstPos: 0, lastPos: undefined }],
       ["0-0", { firstPos: 0, lastPos: 0 }],
       ["100-100", { firstPos: 100, lastPos: 100 }],
-      ["100-0", { firstPos: 100, lastPos: 0 }],
-      ["100-0", { firstPos: 100, lastPos: 0 }],
 
       ["-0", { suffixLength: 0 }],
       ["-100", { suffixLength: 100 }],
@@ -141,6 +140,19 @@ describe("parseRangeSpec", () => {
       "",
       ",",
       "abc,",
+    ];
+
+    table.forEach((input) => {
+      assertThrows(() => parseRangeSpec(input));
+    });
+  });
+
+  it("should throw error if the input is invalid semantic", () => {
+    const table: string[] = [
+      "100-0",
+      "1-0",
+      "01-00",
+      "0000001-0000000000",
     ];
 
     table.forEach((input) => {

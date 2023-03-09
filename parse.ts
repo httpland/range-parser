@@ -1,7 +1,7 @@
 // Copyright 2023-latest the httpland authors. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { isNotEmpty, isString, isUndefined, trim } from "./deps.ts";
+import { isNotEmpty, isNumber, isString, isUndefined, trim } from "./deps.ts";
 import type { Range, RangeSpec } from "./types.ts";
 
 const RangeSpecifierRe =
@@ -10,6 +10,12 @@ const RangeSpecifierRe =
 export interface RangesSpecifier {
   readonly rangeUnit: string;
   readonly rangeSet: string;
+}
+
+enum Msg {
+  InvalidToken = "Unexpected token",
+  InvalidIntRangeSemantic = "<last-pos> is less than <first-pos>",
+  Unexpected = "Unreachable",
 }
 
 /** Parses a string as HTTP `Range` header field and yield JavaScript Object.
@@ -32,6 +38,7 @@ export interface RangesSpecifier {
  * ```
  *
  * @throws {SyntaxError} If the input is invalid `Range` header format.
+ * @throws {RangeError} If the input is invalid semantic.
  */
 export function parse(input: string): Range {
   input = input.trim();
@@ -45,7 +52,7 @@ export function parse(input: string): Range {
 export function parseRangesSpecifier(input: string): RangesSpecifier {
   const result = RangeSpecifierRe.exec(input);
 
-  if (!result || !result.groups) throw Error();
+  if (!result || !result.groups) throw SyntaxError();
 
   const rangeUnit = result.groups.rangeUnit;
   const rangeSet = result.groups.rangeSet;
@@ -64,19 +71,25 @@ export function parseRangeSpec(input: string): RangeSpec {
   const result = RangeSpecRe.exec(input);
 
   if (!result || !result.groups) {
-    throw SyntaxError("Unexpected token");
+    throw SyntaxError(Msg.InvalidToken);
   }
 
-  const firstPos = result.groups.firstPos;
-  const lastPos = result.groups.lastPos;
+  const firstPosStr = result.groups.firstPos;
+  const lastPosValue = result.groups.lastPos;
   const suffixLength = result.groups.suffixLength;
   const otherRange = result.groups.otherRange;
 
-  if (isString(firstPos)) {
-    return {
-      firstPos: Number.parseInt(firstPos),
-      lastPos: lastPos ? Number.parseInt(lastPos) : undefined,
-    };
+  if (isString(firstPosStr)) {
+    const firstPos = Number.parseInt(firstPosStr);
+    const lastPos = isString(lastPosValue)
+      ? Number.parseInt(lastPosValue)
+      : undefined;
+
+    if (isNumber(lastPos) && lastPos < firstPos) {
+      throw RangeError(Msg.InvalidIntRangeSemantic);
+    }
+
+    return { firstPos, lastPos };
   }
 
   if (isString(suffixLength)) {
@@ -89,7 +102,7 @@ export function parseRangeSpec(input: string): RangeSpec {
 
   if (isString(otherRange)) return otherRange;
 
-  throw SyntaxError("Unreachable");
+  throw SyntaxError(Msg.Unexpected);
 }
 
 export function parseRangeSet(input: string): [RangeSpec, ...RangeSpec[]] {

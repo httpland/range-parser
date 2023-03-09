@@ -30,7 +30,7 @@ assertEquals(actual, {
 ```
 
 `rangeSet` is a list of one or more `<int-range>`, `<suffix-range>` and
-`other-range` according to the definition of `<range-spec>`.
+`<other-range>` according to the definition of `<range-spec>`.
 
 It has the following data structure:
 
@@ -45,7 +45,17 @@ interface SuffixRange {
 type OtherRange = string;
 ```
 
-### Throwing error
+### Parsing specification
+
+The parser strictly adheres to the ABNF syntax. It also checks semantics.
+
+Specifically, the parser guarantees the following:
+
+- The `<int-range>` or `<suffix-range>` number is a non-negative integer
+- `<range-unit>` and `<other-range>` are syntactically valid strings
+- `<int-range>`, `<first-pos>` is equal to or greater than `<last-pos>`.
+
+### Syntax error
 
 Throws `SyntaxError` if it detects invalid syntax.
 
@@ -56,7 +66,24 @@ import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 assertThrows(() => parse("<invalid:input>"));
 ```
 
-## Utils
+### Semantic error
+
+The following cases are semantic error:
+
+- `<int-range>`, `<last-pos>` less than `<first-pos>`.
+
+see <https://www.rfc-editor.org/rfc/rfc9110#section-14.1.2-6>
+
+In this case, it throws a `RangeError`.
+
+```ts
+import { parse } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
+
+assertThrows(() => parse("bytes=1-0"));
+```
+
+## Utility
 
 We provide some utilities.
 
