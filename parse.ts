@@ -52,13 +52,13 @@ export function parse(input: string): Range {
 export function parseRangesSpecifier(input: string): RangesSpecifier {
   const result = RangeSpecifierRe.exec(input);
 
-  if (!result || !result.groups) throw SyntaxError();
+  if (!result || !result.groups) throw SyntaxError(Msg.InvalidToken);
 
   const rangeUnit = result.groups.rangeUnit;
   const rangeSet = result.groups.rangeSet;
 
   if (isUndefined(rangeUnit) || isUndefined(rangeSet)) {
-    throw SyntaxError();
+    throw SyntaxError(Msg.Unexpected);
   }
 
   return { rangeUnit, rangeSet };
@@ -95,7 +95,7 @@ export function parseRangeSpec(input: string): RangeSpec {
   if (isString(suffixLength)) {
     const suffix = Number.parseInt(suffixLength);
 
-    if (isNaN(suffix)) throw SyntaxError();
+    if (isNaN(suffix)) throw SyntaxError(Msg.InvalidToken);
 
     return { suffixLength: suffix };
   }
@@ -112,7 +112,7 @@ export function parseRangeSet(input: string): [RangeSpec, ...RangeSpec[]] {
     .map(trim)
     .map(parseRangeSpec);
 
-  if (!isNotEmpty(ranges)) throw SyntaxError();
+  if (!isNotEmpty(ranges)) throw SyntaxError(Msg.InvalidToken);
 
   return ranges;
 }
