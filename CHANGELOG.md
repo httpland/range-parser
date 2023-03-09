@@ -1,3 +1,10 @@
+# [1.0.0-beta.3](https://github.com/httpland/range-parser/compare/1.0.0-beta.2...1.0.0-beta.3) (2023-03-09)
+
+
+### Features
+
+* **parse:** improve error message ([fb5cba9](https://github.com/httpland/range-parser/commit/fb5cba95a2c4b3fa69763a901be870034e2cc2ae))
+
 # [1.0.0-beta.2](https://github.com/httpland/range-parser/compare/1.0.0-beta.1...1.0.0-beta.2) (2023-03-09)
 
 
