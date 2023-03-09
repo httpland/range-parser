@@ -3,7 +3,7 @@
 [![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno)](https://deno.land/x/range_parser)
 [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/range_parser/mod.ts)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/httpland/range-parser)](https://github.com/httpland/range-parser/releases)
-[![codecov](https://codecov.io/gh/httpland/range-parser/branch/main/graph/badge.svg?token=nan4NUrx1V)](https://codecov.io/gh/httpland/range-parser)
+[![codecov](https://codecov.io/github/httpland/range-parser/branch/main/graph/badge.svg?token=MNFZEQH8OK)](https://codecov.io/gh/httpland/range-parser)
 [![GitHub](https://img.shields.io/github/license/httpland/range-parser)](https://github.com/httpland/range-parser/blob/main/LICENSE)
 
 [![test](https://github.com/httpland/range-parser/actions/workflows/test.yaml/badge.svg)](https://github.com/httpland/range-parser/actions/workflows/test.yaml)
