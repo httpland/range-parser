@@ -72,7 +72,8 @@ The following cases are semantic error:
 
 - `<int-range>`, `<last-pos>` less than `<first-pos>`.
 
-see <https://www.rfc-editor.org/rfc/rfc9110#section-14.1.2-6>
+see
+[RFC 9110, 14.1.1. Range Specifiers](https://www.rfc-editor.org/rfc/rfc9110#section-14.1.1-6)
 
 In this case, it throws a `RangeError`.
 
