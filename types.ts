@@ -1,52 +1,40 @@
 // Copyright 2023-latest the httpland authors. All rights reserved. MIT license.
 // This module is browser compatible.
 
-/**
- * @see https://www.rfc-editor.org/rfc/rfc9110#section-14.1.1-3
- */
+/** [`<range-spec>`](https://www.rfc-editor.org/rfc/rfc9110#rule.ranges-specifier) representation. */
 export type RangeSpec = IntRange | SuffixRange | OtherRange;
 
-/**
- * @see https://www.rfc-editor.org/rfc/rfc9110#section-14.1.1-5
- */
+/** [`<int-range>`](https://www.rfc-editor.org/rfc/rfc9110#rule.int-range) representation. */
 export interface IntRange {
-  /** The number is positive integer. <first-pos> */
+  /** [`<first-pos>`](https://www.rfc-editor.org/rfc/rfc9110#rule.int-range) representation. The number is non-negative integer. */
   readonly firstPos: number;
 
-  /** The number is positive integer. <last-pos> */
+  /** [`<last-pos>`](https://www.rfc-editor.org/rfc/rfc9110#rule.int-range) representation.The number is non-negative integer. */
   readonly lastPos: number | undefined;
 }
 
-/**
- * @see https://www.rfc-editor.org/rfc/rfc9110#section-14.1.1-5
- */
+/** [`<suffix-range>`](https://www.rfc-editor.org/rfc/rfc9110#rule.suffix-range) representation. */
 export interface SuffixRange {
-  /** The number is positive integer. <suffix-length> */
+  /** [`<suffix-length>`](https://www.rfc-editor.org/rfc/rfc9110#rule.suffix-range) representation. The number is non-negative integer. */
   readonly suffixLength: number;
 }
 
-/**
- * @see https://www.rfc-editor.org/rfc/rfc9110#section-14.1.1-5
- */
+/** [`<other-range>`](https://www.rfc-editor.org/rfc/rfc9110#rule.other-range) representation. */
 export type OtherRange = string;
 
-/**
- * @see [RFC 9110, 14.1.1. Range Specifiers](https://www.rfc-editor.org/rfc/rfc9110#section-14.1.1)
- */
+/** [`<range-set>`](https://www.rfc-editor.org/rfc/rfc9110#range.specifiers) representation. */
 export type RangeSet = [RangeSpec, ...RangeSpec[]];
 
-/**
- * @see [RFC 9110, 14.1.1. Range Specifiers](https://www.rfc-editor.org/rfc/rfc9110#section-14.1.1)
- */
+/** [`<ranges-specifier>`](https://www.rfc-editor.org/rfc/rfc9110#rule.ranges-specifier) representation. */
 export interface RangesSpecifier {
-  /** <range-unit> */
+  /** [`<range-unit>`](https://www.rfc-editor.org/rfc/rfc9110#range.units) representation. */
   readonly rangeUnit: string;
 
-  /** <range-set> */
+  /** [`<range-set>`](https://www.rfc-editor.org/rfc/rfc9110#range.specifiers) representation. */
   readonly rangeSet: RangeSet;
 }
 
-/**
+/** [`<Range>`](https://www.rfc-editor.org/rfc/rfc9110#name-range) representation.
  * @see [RFC 9110, 14.2. Range](https://www.rfc-editor.org/rfc/rfc9110#section-14.2)
  */
 export type Range = RangesSpecifier;
