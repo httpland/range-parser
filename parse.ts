@@ -5,7 +5,7 @@ import { isNotEmpty, isNumber, isString, isUndefined, trim } from "./deps.ts";
 import type { Range, RangeSpec } from "./types.ts";
 
 const RangeSpecifierRe =
-  /^(?<rangeUnit>([\w!#$%&'*+-.^`|~])+)=(?<rangeSet>(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+))([\t ]*,[\t ]*(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+)))*)$/;
+  /^(?<rangeUnit>([\w!#$%&'*+-.^`|~])+)=(?<rangeSet>(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+))([\t ]*?,[\t ]*?(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+)))*)$/;
 
 export interface RangesSpecifier {
   readonly rangeUnit: string;
