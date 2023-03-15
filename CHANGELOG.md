@@ -1,3 +1,15 @@
+## [1.0.1-beta.1](https://github.com/httpland/range-parser/compare/1.0.0...1.0.1-beta.1) (2023-03-15)
+
+
+### Bug Fixes
+
+* **parse:** avoid destructive backtracking ([6e30ff1](https://github.com/httpland/range-parser/commit/6e30ff1487fd9a417340618ded157852622e748a))
+
+
+### Performance Improvements
+
+* **parse:** optimize regex pattern ([523dbb2](https://github.com/httpland/range-parser/commit/523dbb2bdaeb46446c2731ccd7445861661cb69a))
+
 # 1.0.0 (2023-03-09)
 
 
