@@ -2,9 +2,9 @@
 // This module is browser compatible.
 
 import {
+  assertRangeUnitFormat,
   isIntRange,
   isOtherRange,
-  isRangeUnitFormat,
   isValidIntRange,
   isValidOtherRange,
   isValidSuffixRange,
@@ -38,21 +38,12 @@ import type {
  * @throws {TypeError} If the {@link Range} is invalid.
  */
 export function stringify(range: Range): string {
-  const rangeUnit = stringifyRangeUnit(range.rangeUnit);
+  assertRangeUnitFormat(range.rangeUnit);
+
+  const rangeUnit = range.rangeUnit;
   const rangeSet = stringifyRangeSet(range.rangeSet);
 
   return `${rangeUnit}=${rangeSet}`;
-}
-
-/**
- * @throws {TypeError} If the input is invalid `<range-unit>`.
- */
-export function stringifyRangeUnit(rangeUnit: string): string {
-  if (!isRangeUnitFormat(rangeUnit)) {
-    throw TypeError("<range-unit> is invalid.");
-  }
-
-  return rangeUnit;
 }
 
 /**
@@ -64,6 +55,9 @@ export function stringifyRangeSet(rangeSet: RangeSet): string {
   return rangeSetValue;
 }
 
+/**
+ * @throws {TypeError} If the {@link RangeSpec} is invalid.
+ */
 export function stringifyRangeSpec(rangeSpec: RangeSpec): string {
   if (isIntRange(rangeSpec)) return stringifyIntRange(rangeSpec);
   if (isOtherRange(rangeSpec)) return stringifyOtherRange(rangeSpec);
@@ -71,6 +65,9 @@ export function stringifyRangeSpec(rangeSpec: RangeSpec): string {
   return stringifySuffixRange(rangeSpec);
 }
 
+/**
+ * @throws {TypeError} If the {@link IntRange} is invalid.
+ */
 export function stringifyIntRange(intRange: IntRange): string {
   if (!isValidIntRange(intRange)) {
     throw TypeError("<int-range> is invalid.");
@@ -81,6 +78,9 @@ export function stringifyIntRange(intRange: IntRange): string {
   return `${intRange.firstPos}-${lastPos}`;
 }
 
+/**
+ * @throws {TypeError} If the {@link OtherRange} is invalid.
+ */
 export function stringifyOtherRange(otherRange: OtherRange): string {
   if (!isValidOtherRange(otherRange)) {
     throw TypeError("<other-range> is invalid.");
@@ -89,6 +89,9 @@ export function stringifyOtherRange(otherRange: OtherRange): string {
   return otherRange;
 }
 
+/**
+ * @throws {TypeError} If the {@link SuffixRange} is invalid.
+ */
 export function stringifySuffixRange(suffixRange: SuffixRange): string {
   if (!isValidSuffixRange(suffixRange)) {
     throw TypeError("<suffix-range> is invalid.");

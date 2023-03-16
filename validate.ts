@@ -125,3 +125,12 @@ export function isRangeFormat(input: string): boolean {
 export function isRangeUnitFormat(input: string): boolean {
   return RangeSet.test(input);
 }
+
+/** Assert for `<range-unit>` format.
+ * @throws {TypeError} If the input is not `<range-unit>` format.
+ */
+export function assertRangeUnitFormat(input: string): asserts input {
+  if (!isRangeUnitFormat(input)) {
+    throw TypeError("invalid <range-unit> format.");
+  }
+}
