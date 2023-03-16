@@ -2,6 +2,7 @@
 // This module is browser compatible.
 
 import { isString } from "./deps.ts";
+import { RangeSpecifierRe } from "./parse.ts";
 import type { IntRange, OtherRange, RangeSpec, SuffixRange } from "./types.ts";
 
 /** Whether the {@link RangeSpec} is {@link IntRange} or not.
@@ -77,4 +78,18 @@ export function isSuffixRange(rangeSpec: RangeSpec): rangeSpec is SuffixRange {
  */
 export function isOtherRange(rangeSpec: RangeSpec): rangeSpec is OtherRange {
   return isString(rangeSpec);
+}
+
+/** Whether the input is HTTP `Range` header field format or not.
+ *
+ * @example
+ * ```ts
+ * import { isRangeFormat } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+ *
+ * assert(isRangeFormat("bytes=0-100, 200-, -500"));
+ * assert(!isRangeFormat("<invalid>"));
+ * ```
+ */
+export function isRangeFormat(input: string): boolean {
+  return RangeSpecifierRe.test(input.trim());
 }

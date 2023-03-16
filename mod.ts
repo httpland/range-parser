@@ -2,7 +2,12 @@
 // This module is browser compatible.
 
 export { parse } from "./parse.ts";
-export { isIntRange, isOtherRange, isSuffixRange } from "./validate.ts";
+export {
+  isIntRange,
+  isOtherRange,
+  isRangeFormat,
+  isSuffixRange,
+} from "./validate.ts";
 export type {
   IntRange,
   OtherRange,

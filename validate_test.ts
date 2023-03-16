@@ -1,4 +1,9 @@
-import { isIntRange, isOtherRange, isSuffixRange } from "./validate.ts";
+import {
+  isIntRange,
+  isOtherRange,
+  isRangeFormat,
+  isSuffixRange,
+} from "./validate.ts";
 import type { RangeSpec } from "./types.ts";
 import { assert, describe, it } from "./_dev_deps.ts";
 
@@ -77,6 +82,38 @@ describe("isOtherRange", () => {
 
     table.forEach((rangeSpec) => {
       assert(!isOtherRange(rangeSpec));
+    });
+  });
+});
+
+describe("isRangeFormat", () => {
+  it("should return true", () => {
+    const table: string[] = [
+      "bytes=0-1",
+      " bytes=0-1 ",
+      "a=a",
+      "a=0-1, 100-, -200",
+    ];
+
+    table.forEach((rangeSpec) => {
+      assert(isRangeFormat(rangeSpec));
+    });
+  });
+
+  it("should return false", () => {
+    const table: string[] = [
+      "",
+      "0-1",
+      "<>=<>",
+      "-100",
+      "0-",
+      "a=,",
+      "a=,,,",
+      "a=,b",
+    ];
+
+    table.forEach((rangeSpec) => {
+      assert(!isRangeFormat(rangeSpec));
     });
   });
 });

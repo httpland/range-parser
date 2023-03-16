@@ -163,6 +163,17 @@ assert(!isOtherRange(intRange));
 assert(!isOtherRange(suffixRange));
 ```
 
+### isRangeFormat
+
+Whether the input is HTTP `Range` header field format or not.
+
+```ts
+import { isRangeFormat } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+
+assert(isRangeFormat("bytes=0-100, 200-, -500"));
+assert(!isRangeFormat("<invalid>"));
+```
+
 ## License
 
 Copyright © 2023-present [httpland](https://github.com/httpland).
