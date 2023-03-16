@@ -14,7 +14,7 @@ HTTP `Range` header field parser.
 Compliant with
 [RFC 9110, 14.2 Range](https://www.rfc-editor.org/rfc/rfc9110#section-14.2)
 
-## Parsing
+## Deserialization
 
 Parses a string as HTTP `Range` header field and yield JavaScript Object.
 
