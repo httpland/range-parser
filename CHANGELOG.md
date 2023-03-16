@@ -1,3 +1,21 @@
+# [1.1.0](https://github.com/httpland/range-parser/compare/1.0.0...1.1.0) (2023-03-16)
+
+
+### Bug Fixes
+
+* **parse:** avoid destructive backtracking ([6e30ff1](https://github.com/httpland/range-parser/commit/6e30ff1487fd9a417340618ded157852622e748a))
+
+
+### Features
+
+* **stringify:** add serializer for `Range` object ([56f5cb4](https://github.com/httpland/range-parser/commit/56f5cb49153072927a5c6fc8a4eff611e35b61b7))
+* **validate:** add validator for HTTP Range header field format ([1331749](https://github.com/httpland/range-parser/commit/1331749afab3423ceef7a26a7500ce0ce4671078))
+
+
+### Performance Improvements
+
+* **parse:** optimize regex pattern ([523dbb2](https://github.com/httpland/range-parser/commit/523dbb2bdaeb46446c2731ccd7445861661cb69a))
+
 # [1.1.0-beta.1](https://github.com/httpland/range-parser/compare/1.0.1-beta.1...1.1.0-beta.1) (2023-03-16)
 
 
