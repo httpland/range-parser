@@ -8,6 +8,7 @@ export {
   isRangeFormat,
   isSuffixRange,
 } from "./validate.ts";
+export { stringify } from "./stringify.ts";
 export type {
   IntRange,
   OtherRange,

@@ -2,6 +2,7 @@
 // This module is browser compatible.
 
 export {
+  isNonNegativeInteger,
   isNumber,
   isString,
   isUndefined,
