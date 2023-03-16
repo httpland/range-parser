@@ -14,7 +14,7 @@ HTTP `Range` header field parser.
 Compliant with
 [RFC 9110, 14.2 Range](https://www.rfc-editor.org/rfc/rfc9110#section-14.2)
 
-## Parsing
+## Deserialization
 
 Parses a string as HTTP `Range` header field and yield JavaScript Object.
 
@@ -93,6 +93,41 @@ import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 assertThrows(() => parse("bytes=1-0"));
 ```
 
+## Serialization
+
+Serializes `Range` into string.
+
+```ts
+import { stringify } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+
+assertEquals(
+  stringify({
+    rangeUnit: "bytes",
+    rangeSet: [{ firstPos: 0, lastPos: 100 }, { suffixLength: 200 }],
+  }),
+  "bytes=0-100, -200",
+);
+```
+
+### Throwing error
+
+Throws `TypeError` if `Range` contains errors.
+
+For error definitions, see the [Parsing specification](#parsing-specification).
+
+```ts
+import { stringify } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
+
+assertThrows(() =>
+  stringify({
+    rangeUnit: "bytes",
+    rangeSet: [{ firstPos: NaN, lastPos: undefined }],
+  })
+);
+```
+
 ## Utility
 
 We provide some utilities.
@@ -161,6 +196,18 @@ declare const otherRange: OtherRange;
 assert(isOtherRange(otherRange));
 assert(!isOtherRange(intRange));
 assert(!isOtherRange(suffixRange));
+```
+
+### isRangeFormat
+
+Whether the input is HTTP `Range` header field format or not.
+
+```ts
+import { isRangeFormat } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { assert } from "https://deno.land/std/testing/asserts.ts";
+
+assert(isRangeFormat("bytes=0-100, 200-, -500"));
+assert(!isRangeFormat("<invalid>"));
 ```
 
 ## License
