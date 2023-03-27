@@ -36,4 +36,31 @@ export const makeOptions = (version: string): BuildOptions => ({
     },
   },
   packageManager: "pnpm",
+  mappings: {
+    "https://deno.land/x/isx@1.1.1/is_string.ts": {
+      name: "@miyauci/isx",
+      version: "1.1.1",
+      subPath: "is_string",
+    },
+    "https://deno.land/x/isx@1.1.1/is_number.ts": {
+      name: "@miyauci/isx",
+      version: "1.1.1",
+      subPath: "is_number",
+    },
+    "https://deno.land/x/isx@1.1.1/is_undefined.ts": {
+      name: "@miyauci/isx",
+      version: "1.1.1",
+      subPath: "is_undefined",
+    },
+    "https://deno.land/x/isx@1.1.1/number/is_non_negative_integer.ts": {
+      name: "@miyauci/isx",
+      version: "1.1.1",
+      subPath: "number/is_non_negative_integer",
+    },
+    "https://deno.land/x/isx@1.1.1/iterable/is_not_empty.ts": {
+      name: "@miyauci/isx",
+      version: "1.1.1",
+      subPath: "iterable/is_not_empty",
+    },
+  },
 });
