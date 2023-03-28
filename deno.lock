@@ -12,11 +12,6 @@
     "https://deno.land/x/isx@1.1.1/is_undefined.ts": "561d7787e74bc56f83870df386bd0ed81d8006f2ee0062cf8903589fc89c51ac",
     "https://deno.land/x/isx@1.1.1/iterable/is_not_empty.ts": "7e0417b5d6a2d58cc5a446e0f55b8188504873ede0dbea19c5316ed9e21dad08",
     "https://deno.land/x/isx@1.1.1/number/is_non_negative_integer.ts": "ce7b63f40d22bd5575f008f370493e1ce4e5305f59144fb6362a459a2b13ccf1",
-    "https://deno.land/x/prelude_js@1.0.0-beta.3/deps.ts": "8a8002b53623cfbf38b95ec23802f0580634546f3cc65875251ba80e28fe64aa",
-    "https://deno.land/x/prelude_js@1.0.0-beta.3/lists.ts": "7c320f4d314d32e6aadb0c9d3739d188afa84966b0fb918ac3b7b35b76713fb0",
-    "https://deno.land/x/prelude_js@1.0.0-beta.3/mod.ts": "d077acf8b674b18d0decd83885de7a00360a448a8a141ae4335671b2c83c914e",
-    "https://deno.land/x/prelude_js@1.0.0-beta.3/multiary.ts": "afd3991456cea084bc2f995bd56b780c358ceff9c1f292ab7dfa5496af5172a8",
-    "https://deno.land/x/prelude_js@1.0.0-beta.3/records.ts": "4dbb6db91ddb35aa6171a98256db97c8a8c3af9221767a8dbad21a00ebd42e7e",
-    "https://deno.land/x/prelude_js@1.0.0-beta.3/unary.ts": "b79963a09af544cdbf81caf341fb25887a453670455a0808ce8c595bec4cc7e1"
+    "https://deno.land/x/prelude_js@1.0.0/trim.ts": "9e839053220bee1c5673026ccf4ddba475c3b982b3284b1d6b86e5440821de61"
   }
 }
