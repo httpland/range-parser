@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/httpland/range-parser/compare/1.1.0...1.2.0) (2023-03-28)
+
+
+### Bug Fixes
+
+* **parse:** change the definition of valid syntax ([e718b1e](https://github.com/httpland/range-parser/commit/e718b1e73318fedcefe4bceca5c26dbcbfad39bb)), closes [#3](https://github.com/httpland/range-parser/issues/3)
+
+
+### Features
+
+* rename `parse` and `stringify`, mark as deprecated ([d8d84dc](https://github.com/httpland/range-parser/commit/d8d84dc93f133f65b917fc43becbf2c07817567d))
+
 # [1.2.0-beta.2](https://github.com/httpland/range-parser/compare/1.2.0-beta.1...1.2.0-beta.2) (2023-03-28)
 
 
