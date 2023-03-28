@@ -1,3 +1,10 @@
+# [1.2.0-beta.1](https://github.com/httpland/range-parser/compare/1.1.0...1.2.0-beta.1) (2023-03-28)
+
+
+### Features
+
+* rename `parse` and `stringify`, mark as deprecated ([d8d84dc](https://github.com/httpland/range-parser/commit/d8d84dc93f133f65b917fc43becbf2c07817567d))
+
 # [1.1.0](https://github.com/httpland/range-parser/compare/1.0.0...1.1.0) (2023-03-16)
 
 
