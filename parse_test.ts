@@ -1,5 +1,5 @@
 import {
-  parse,
+  parseRange,
   parseRangeSpec,
   parseRangesSpecifier,
   RangesSpecifier,
@@ -7,7 +7,7 @@ import {
 import { Range, RangeSpec } from "./types.ts";
 import { assertEquals, assertThrows, describe, it } from "./_dev_deps.ts";
 
-describe("parse", () => {
+describe("parseRange", () => {
   it("should return parsed <Range>", () => {
     const table: [string, Range][] = [
       ["bytes=0-100, 200-, -300, test", {
@@ -31,7 +31,7 @@ describe("parse", () => {
     ];
 
     table.forEach(([input, expected]) => {
-      assertEquals(parse(input), expected);
+      assertEquals(parseRange(input), expected);
     });
   });
 
@@ -47,7 +47,7 @@ describe("parse", () => {
     ];
 
     table.forEach((input) => {
-      assertThrows(() => parse(input));
+      assertThrows(() => parseRange(input));
     });
   });
 });

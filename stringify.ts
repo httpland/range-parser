@@ -37,7 +37,7 @@ import type {
  *
  * @throws {TypeError} If the {@link Range} is invalid.
  */
-export function stringify(range: Range): string {
+export function stringifyRange(range: Range): string {
   assertRangeUnitFormat(range.rangeUnit);
 
   const rangeUnit = range.rangeUnit;
@@ -45,6 +45,11 @@ export function stringify(range: Range): string {
 
   return `${rangeUnit}=${rangeSet}`;
 }
+
+/**
+ * @deprecated Rename to {@link stringifyRange}
+ */
+export const stringify = stringifyRange;
 
 /**
  * @throws {TypeError} If the {@link RangeSet} is invalid.

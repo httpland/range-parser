@@ -1,7 +1,7 @@
 import {
-  stringify,
   stringifyIntRange,
   stringifyOtherRange,
+  stringifyRange,
   stringifyRangeSet,
   stringifyRangeSpec,
   stringifySuffixRange,
@@ -16,7 +16,7 @@ import type {
 } from "./types.ts";
 import { assertEquals, assertThrows, describe, it } from "./_dev_deps.ts";
 
-describe("stringify", () => {
+describe("stringifyRange", () => {
   it("should return string if the input is valid", () => {
     const table: [Range, string][] = [
       [
@@ -44,7 +44,7 @@ describe("stringify", () => {
     ];
 
     table.forEach(([range, expected]) => {
-      assertEquals(stringify(range), expected);
+      assertEquals(stringifyRange(range), expected);
     });
   });
 
@@ -59,7 +59,7 @@ describe("stringify", () => {
     ];
 
     table.forEach((range) => {
-      assertThrows(() => stringify(range));
+      assertThrows(() => stringifyRange(range));
     });
   });
 });

@@ -22,10 +22,10 @@ The field naming conventions follow
 [RFC 9110, 14.2. Range](https://www.rfc-editor.org/rfc/rfc9110#section-14.2).
 
 ```ts
-import { parse } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
-const actual = parse("bytes=0-100, 200-, -300, test");
+const actual = parseRange("bytes=0-100, 200-, -300, test");
 
 assertEquals(actual, {
   rangeUnit: "bytes",
@@ -69,10 +69,10 @@ Specifically, the parser guarantees the following:
 Throws `SyntaxError` if it detects invalid syntax.
 
 ```ts
-import { parse } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
-assertThrows(() => parse("<invalid:input>"));
+assertThrows(() => parseRange("<invalid:input>"));
 ```
 
 ### Semantic error
@@ -87,10 +87,10 @@ see
 In this case, it throws a `RangeError`.
 
 ```ts
-import { parse } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
-assertThrows(() => parse("bytes=1-0"));
+assertThrows(() => parseRange("bytes=1-0"));
 ```
 
 ## Serialization
@@ -98,11 +98,11 @@ assertThrows(() => parse("bytes=1-0"));
 Serializes `Range` into string.
 
 ```ts
-import { stringify } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { stringifyRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 assertEquals(
-  stringify({
+  stringifyRange({
     rangeUnit: "bytes",
     rangeSet: [{ firstPos: 0, lastPos: 100 }, { suffixLength: 200 }],
   }),
@@ -117,11 +117,11 @@ Throws `TypeError` if `Range` contains errors.
 For error definitions, see the [Parsing specification](#parsing-specification).
 
 ```ts
-import { stringify } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { stringifyRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
 assertThrows(() =>
-  stringify({
+  stringifyRange({
     rangeUnit: "bytes",
     rangeSet: [{ firstPos: NaN, lastPos: undefined }],
   })

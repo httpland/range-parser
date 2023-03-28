@@ -20,14 +20,14 @@ enum Msg {
   Unexpected = "Unreachable",
 }
 
-/** Parses a string as HTTP `Range` header field and yield JavaScript Object.
+/** Parses a string into {@link Range}.
  *
  * @example
  * ```ts
- * import { parse } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+ * import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
  * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
- * const actual = parse("bytes=0-100, 200-, -300");
+ * const actual = parseRange("bytes=0-100, 200-, -300");
  *
  * assertEquals(actual, {
  *   rangeUnit: "bytes",
@@ -42,7 +42,7 @@ enum Msg {
  * @throws {SyntaxError} If the input is invalid `Range` header format.
  * @throws {RangeError} If the input is invalid semantic.
  */
-export function parse(input: string): Range {
+export function parseRange(input: string): Range {
   input = input.trim();
 
   const rangesSpecifier = parseRangesSpecifier(input);
@@ -65,6 +65,11 @@ export function parseRangesSpecifier(input: string): RangesSpecifier {
 
   return { rangeUnit, rangeSet };
 }
+
+/**
+ * @deprecated Rename to {@link parseRange}
+ */
+export const parse = parseRange;
 
 const RangeSpecRe =
   /^((?<firstPos>\d+)-(?<lastPos>\d+)?)$|^(-(?<suffixLength>\d+))$|^(?<otherRange>[\x21-\x2B\x2D-\x7E]+)$/;
