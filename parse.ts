@@ -24,7 +24,7 @@ enum Msg {
  *
  * @example
  * ```ts
- * import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+ * import { parseRange } from "https://deno.land/x/range_parser@$VERSION/parse.ts";
  * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
  * const actual = parseRange("bytes=0-100, 200-, -300");

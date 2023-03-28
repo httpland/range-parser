@@ -22,7 +22,7 @@ The field naming conventions follow
 [RFC 9110, 14.2. Range](https://www.rfc-editor.org/rfc/rfc9110#section-14.2).
 
 ```ts
-import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { parseRange } from "https://deno.land/x/range_parser@$VERSION/parse.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 const actual = parseRange("bytes=0-100, 200-, -300, test");
@@ -69,7 +69,7 @@ Specifically, the parser guarantees the following:
 Throws `SyntaxError` if it detects invalid syntax.
 
 ```ts
-import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { parseRange } from "https://deno.land/x/range_parser@$VERSION/parse.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
 assertThrows(() => parseRange("<invalid:input>"));
@@ -87,7 +87,7 @@ see
 In this case, it throws a `RangeError`.
 
 ```ts
-import { parseRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { parseRange } from "https://deno.land/x/range_parser@$VERSION/parse.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
 assertThrows(() => parseRange("bytes=1-0"));
@@ -98,7 +98,7 @@ assertThrows(() => parseRange("bytes=1-0"));
 Serializes `Range` into string.
 
 ```ts
-import { stringifyRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { stringifyRange } from "https://deno.land/x/range_parser@$VERSION/stringify.ts";
 import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
 
 assertEquals(
@@ -117,7 +117,7 @@ Throws `TypeError` if `Range` contains errors.
 For error definitions, see the [Parsing specification](#parsing-specification).
 
 ```ts
-import { stringifyRange } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+import { stringifyRange } from "https://deno.land/x/range_parser@$VERSION/stringify.ts";
 import { assertThrows } from "https://deno.land/std/testing/asserts.ts";
 
 assertThrows(() =>

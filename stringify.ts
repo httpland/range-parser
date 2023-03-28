@@ -23,11 +23,11 @@ import type {
  *
  * @example
  * ```ts
- * import { stringify } from "https://deno.land/x/range_parser@$VERSION/mod.ts";
+ * import { stringifyRange } from "https://deno.land/x/range_parser@$VERSION/stringify.ts";
  * import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
  *
  * assertEquals(
- *   stringify({
+ *   stringifyRange({
  *     rangeUnit: "bytes",
  *     rangeSet: [{ firstPos: 0, lastPos: 100 }, { suffixLength: 200 }],
  *   }),
