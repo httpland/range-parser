@@ -1,18 +1,9 @@
 // Copyright 2023-latest the httpland authors. All rights reserved. MIT license.
 // This module is browser compatible.
 
-import { isNotEmpty, isNumber, isString, isUndefined, trim } from "./deps.ts";
-import type { Range, RangeSpec } from "./types.ts";
-
-export const RangeSpecifierRe =
-  /^(?<rangeUnit>[\w!#$%&'*+.^`|~-]+)=(?<rangeSet>(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+))([\t ]*?,[\t ]*?(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+)))*)$/;
-export const RangeSet = /^[\w!#$%&'*+.^`|~-]+$/;
-export const ReOtherRange = /^[\x21-\x2B\x2D-\x7E]+$/;
-
-export interface RangesSpecifier {
-  readonly rangeUnit: string;
-  readonly rangeSet: string;
-}
+import { isNotEmpty, isNumber, isString, trim } from "./deps.ts";
+import { isRangeUnitFormat } from "./validate.ts";
+import type { Range, RangeSpec, RangesSpecifier } from "./types.ts";
 
 enum Msg {
   InvalidToken = "Unexpected token",
@@ -43,33 +34,33 @@ enum Msg {
  * @throws {RangeError} If the input is invalid semantic.
  */
 export function parseRange(input: string): Range {
-  input = input.trim();
-
-  const rangesSpecifier = parseRangesSpecifier(input);
-  const rangeSet = parseRangeSet(rangesSpecifier.rangeSet);
-
-  return { rangeUnit: rangesSpecifier.rangeUnit, rangeSet };
-}
-
-export function parseRangesSpecifier(input: string): RangesSpecifier {
-  const result = RangeSpecifierRe.exec(input);
-
-  if (!result || !result.groups) throw SyntaxError(Msg.InvalidToken);
-
-  const rangeUnit = result.groups.rangeUnit;
-  const rangeSet = result.groups.rangeSet;
-
-  if (isUndefined(rangeUnit) || isUndefined(rangeSet)) {
-    throw SyntaxError(Msg.Unexpected);
-  }
-
-  return { rangeUnit, rangeSet };
+  return parseRangesSpecifier(input);
 }
 
 /**
  * @deprecated Rename to {@link parseRange}
  */
 export const parse = parseRange;
+
+const ReRangeSpecifier = /^(.*?)=(.*?)$/;
+
+export function parseRangesSpecifier(input: string): RangesSpecifier {
+  const result = ReRangeSpecifier.exec(input);
+
+  if (!result || !isString(result[1]) || !isString(result[2])) {
+    throw SyntaxError(Msg.InvalidToken);
+  }
+
+  const rangeUnit = result[1];
+
+  if (!isRangeUnitFormat(rangeUnit)) {
+    throw SyntaxError(`invalid <range-unit> syntax. ${rangeUnit}`);
+  }
+
+  const rangeSet = parseRangeSet(result[2]);
+
+  return { rangeUnit, rangeSet };
+}
 
 const RangeSpecRe =
   /^((?<firstPos>\d+)-(?<lastPos>\d+)?)$|^(-(?<suffixLength>\d+))$|^(?<otherRange>[\x21-\x2B\x2D-\x7E]+)$/;
@@ -111,10 +102,10 @@ export function parseRangeSpec(input: string): RangeSpec {
 }
 
 export function parseRangeSet(input: string): [RangeSpec, ...RangeSpec[]] {
-  const result = input.split(",");
-
-  const ranges = result
+  const ranges = input
+    .split(",")
     .map(trim)
+    .filter(Boolean)
     .map(parseRangeSpec);
 
   if (!isNotEmpty(ranges)) throw SyntaxError(Msg.InvalidToken);
