@@ -7,7 +7,6 @@ import {
   isString,
   isUndefined,
 } from "./deps.ts";
-import { RangeSet, RangeSpecifierRe, ReOtherRange } from "./parse.ts";
 import type { IntRange, OtherRange, RangeSpec, SuffixRange } from "./types.ts";
 
 /** Whether the {@link RangeSpec} is {@link IntRange} or not.
@@ -101,10 +100,15 @@ export function isValidSuffixRange(suffixRange: SuffixRange): boolean {
   return isNonNegativeInteger(suffixRange.suffixLength);
 }
 
+const ReOtherRange = /^[\x21-\x2B\x2D-\x7E]+$/;
+
 /** Whether the {@link OtherRange} is valid or not. */
 export function isValidOtherRange(otherRange: OtherRange): boolean {
   return ReOtherRange.test(otherRange);
 }
+
+export const RangeSpecifierRe =
+  /^[\w!#$%&'*+.^`|~-]+=(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+))([\t ]*?,[\t ]*?(((\d)+-((\d)+)?)|(-(\d)+)|([\x21-\x2B\x2D-\x7E]+)))*$/;
 
 /** Whether the input is HTTP `Range` header field format or not.
  *
@@ -121,9 +125,11 @@ export function isRangeFormat(input: string): boolean {
   return RangeSpecifierRe.test(input.trim());
 }
 
+export const ReRangeUnit = /^[\w!#$%&'*+.^`|~-]+$/;
+
 /** Whether the input is `<range-unit>` format or not. */
 export function isRangeUnitFormat(input: string): boolean {
-  return RangeSet.test(input);
+  return ReRangeUnit.test(input);
 }
 
 /** Assert for `<range-unit>` format.
