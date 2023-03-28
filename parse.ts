@@ -5,7 +5,7 @@ import { isNotEmpty, isNumber, isString, trim } from "./deps.ts";
 import { isRangeUnitFormat } from "./validate.ts";
 import type { Range, RangeSpec, RangesSpecifier } from "./types.ts";
 
-enum Msg {
+const enum Msg {
   InvalidToken = "Unexpected token",
   InvalidIntRangeSemantic = "<last-pos> is less than <first-pos>",
   Unexpected = "Unreachable",
