@@ -9,6 +9,7 @@ enum Msg {
   InvalidToken = "Unexpected token",
   InvalidIntRangeSemantic = "<last-pos> is less than <first-pos>",
   Unexpected = "Unreachable",
+  InvalidRangeUnit = "invalid <range-unit> syntax.",
 }
 
 /** Parses a string into {@link Range}.
@@ -54,7 +55,7 @@ export function parseRangesSpecifier(input: string): RangesSpecifier {
   const rangeUnit = result[1];
 
   if (!isRangeUnitFormat(rangeUnit)) {
-    throw SyntaxError(`invalid <range-unit> syntax. ${rangeUnit}`);
+    throw SyntaxError(`${Msg.InvalidRangeUnit} ${rangeUnit}`);
   }
 
   const rangeSet = parseRangeSet(result[2]);
